@@ -1,0 +1,27 @@
+
+<div class="info-card d-flex flex-wrap align-content-center">
+    <img src="{{ user.displayPhoto }}" class="profile-image rounded-circle" alt="Dr. Codex Lantern">
+    <div class="info-card-text ">
+        <a href="#" class="d-flex align-items-center text-white">
+            <span class="text-truncate text-truncate-sm d-inline-block">
+                {{ user.userfirstname }} {{ user.userlastname }}
+            </span>
+        </a>
+        <span>
+            {# {% if online is same as(true) %}
+            <li style="color: rgb(22, 180, 35)" class="fas fa-circle mr-2 ml-1"></li>
+            {% elseif online is same as(false) %}
+            <li style="color: red" class="fas fa-circle mr-2 ml-1"></li>
+            {% endif %}    #}
+            {{ weekDispo }}
+            <small><a href="" data-toggle="modal" data-target="#modal-test" class="text-white" id="dispo"><li class="fal fa-pencil ml-2"></li></a></small>
+        </span>
+    </div>                      
+    {# <div class="info-card-text">
+        <div class="custom-control custom-switch">
+            Juqu'au {{ date|date('d-m-Y') }}
+        </div>
+    </div> #}
+
+    <img src="img/card-backgrounds/cover-2-lg.png" class="cover" alt="cover">
+</div>

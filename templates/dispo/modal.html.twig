@@ -1,0 +1,86 @@
+<!-- MODALS -->
+<div class="modal fade" id="modal-test" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    Disponibilités
+                    <small class="m-0 text-muted">
+                        Gérer ici vos disponibilités.
+                    </small>
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                </button>
+            </div>
+            {{ form_start(formDispo, {'attr': {'class': 'needs-validation'}}) }} 
+            {# <form type="post"> #}
+            <div class="modal-body">
+                
+            <div>
+            {{ form_label(formDispo.candidateavailability, ' ', {'label_attr': {'class': ''}}) }}
+            {{ form_widget(formDispo.candidateavailability) }}
+            
+                {# <input type="checkbox" class="custom-control-input" id="dispo">
+                <label class="custom-control-label" for="dispo">Disponible ?</label> #}
+            </div>
+            <br>
+            <div>
+                <div>
+                {# {{ form_label(formDispo.candidateavailabilitydate, 'Jusqu\'au ..', {'label_attr': {'class': ''}}) }}
+                {{ form_widget(formDispo.candidateavailabilitydate) }} #}
+                
+                    {# <input type="checkbox" class="custom-control-input" id="dispo">
+                    <label class="custom-control-label" for="dispo">Disponible ?</label> #}
+                </div>
+                <br>
+                <div>
+                {# {{ form_label(formTest.parteamerDayAvailability, 'Si disponible, combien de jours par semaine ?.', {'label_attr': {'class': ''}}) }}
+                {{ form_widget(formTest.parteamerDayAvailability) }} #}
+                
+                    {# <input type="checkbox" class="custom-control-input" id="dispo">
+                    <label class="custom-control-label" for="dispo">Disponible ?</label> #}
+                </div>
+            </div>
+
+            <div class="form-group">
+                {# <label class="form-label" for="example-date">Jusqu'au ...</label>
+                <input class="form-control" id="example-date" type="date" name="date" value="2023-07-23"> #}
+                {# {{ form_label(formTest.parteamerEndAvailability, 'Jusqu\'au ...', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(formTest.parteamerEndAvailability, {'attr': {'class': 'form-control'}}) }} #}
+
+                {#  jours/semaine + moulinette auto voir pour table #}
+                
+            </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary edit-dispo">Save changes</button>
+            </div>
+            {{ form_end(formDispo) }}
+            {# </form> #}
+        </div>
+    </div>
+</div>
+
+{# <script>
+    $(document).on("click", ".edit-dispo", function () {
+        $.ajax({
+            type		: "POST",
+            url			: "{{ path('portfolioedit') }}" +'/'+ $(this).data('id'),
+            dataType	: "json",
+            success		: function(data) {
+                //data	= data[0];
+
+                console.log(data);
+                
+                $("#CandidatePortfolioMissions").val(data.candidateportfoliomissions);
+                
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                
+            }
+        });
+    });
+</script> #}

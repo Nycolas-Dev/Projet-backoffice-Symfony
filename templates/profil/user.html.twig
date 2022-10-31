@@ -1,0 +1,626 @@
+{% extends 'base_bootstrap.html.twig' %}
+{% block title %}User{% endblock %}
+{% block main %}
+<script src="js/notifications/toastr/toastr.js"></script>
+<main id="js-page-content" role="main" class="page-content">
+
+
+{{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': ''}}) }}
+{# <form class="needs-validation" novalidate method="POST" enctype="multipart/form-data"> #}
+	<div class="row">
+		<div class="col-xl-12">
+			<div id="panel-1" class="panel">
+				<div class="panel-hdr">
+					<i class="fal fa-address-card fs-xl"></i>&nbsp;&nbsp; 
+					<h2>
+						Coordonnées
+					</h2>
+					<div class="panel-toolbar">
+						<button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Réduire"><i class="fal fa-window-minimize"></i></button>
+					<button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Plein écran"><i class="fal fa-expand"></i></button>
+					</div>
+				</div>
+				<div class="panel-container show">
+					<div class="panel-content">
+						<div class="row">
+							{% if success is same as('1') %}
+							<script>
+								$(document).ready(function()
+								{
+									var i = -1;
+									var toastCount = 0;
+									var $toastlast;
+
+									var getMessageWithClearButton = function(msg)
+									{
+										msg = msg ? msg : 'Clear itself?';
+										msg += '<br /><br /><button type="button" class="btn clear">Yes</button>';
+										return msg;
+									};
+
+									let test = function notification() {
+
+										let shortCutFunction = "success";
+										let msg = "Vos informations ont bien été modifiées.";
+										let title = '';
+										let $showDuration = "300";
+										let $hideDuration = "100";
+										let $timeOut = "5000";
+										let $extendedTimeOut = "5000";
+										let $showEasing = "swing";
+										let $hideEasing = "linear";
+										let $showMethod = "fadeIn";
+										let $hideMethod = "fadeOut";
+										let toastIndex = toastCount++;
+										let addClear = false;
+
+										toastr.options = {
+											closeButton: false,
+											debug: false,
+											newestOnTop: true,
+											progressBar: true,
+											rtl: false,
+											positionClass: "toast-top-right",
+											preventDuplicates: true,
+											onclick: null
+										};
+
+										if ($('#addBehaviorOnToastClick').prop('checked'))
+										{
+											toastr.options.onclick = function()
+											{
+												alert('You can perform some custom action after a toast goes away');
+											};
+										}
+
+										if ($('#addBehaviorOnToastCloseClick').prop('checked'))
+										{
+											toastr.options.onCloseClick = function()
+											{
+												alert('You can perform some custom action when the close button is clicked');
+											};
+										}
+
+										if ($showDuration.length)
+										{
+											toastr.options.showDuration = parseInt($showDuration);
+										}
+
+										if ($hideDuration.length)
+										{
+											toastr.options.hideDuration = parseInt($hideDuration);
+										}
+
+										if ($timeOut.length)
+										{
+											toastr.options.timeOut = addClear ? 0 : parseInt($timeOut);
+										}
+
+										if ($extendedTimeOut.length)
+										{
+											toastr.options.extendedTimeOut = addClear ? 0 : parseInt($extendedTimeOut);
+										}
+
+										if ($showEasing.length)
+										{
+											toastr.options.showEasing = $showEasing;
+										}
+
+										if ($hideEasing.length)
+										{
+											toastr.options.hideEasing = $hideEasing;
+										}
+
+										if ($showMethod.length)
+										{
+											toastr.options.showMethod = $showMethod;
+										}
+
+										if ($hideMethod.length)
+										{
+											toastr.options.hideMethod = $hideMethod;
+										}
+
+										if (addClear)
+										{
+											msg = getMessageWithClearButton(msg);
+											toastr.options.tapToDismiss = false;
+										}
+										if (!msg)
+										{
+											msg = getMessage();
+										}
+
+										$('#toastr-log').text('Command: toastr["' +
+											shortCutFunction +
+											'"]("' +
+											msg +
+											(title ? '", "' + title : '') +
+											'")\n\ntoastr.options = ' +
+											JSON.stringify(toastr.options, null, 2)
+										);
+
+										var $toast = toastr.success(msg, title); // Wire up an event handler to a button in the toast, if it exists
+										$toastlast = $toast;
+
+										if (typeof $toast === 'undefined')
+										{
+											return;
+										}
+
+										if ($toast.find('#okBtn').length)
+										{
+											$toast.delegate('#okBtn', 'click', function()
+											{
+												alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+												$toast.remove();
+											});
+										}
+										if ($toast.find('#surpriseBtn').length)
+										{
+											$toast.delegate('#surpriseBtn', 'click', function()
+											{
+												alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+											});
+										}
+										if ($toast.find('.clear').length)
+										{
+											$toast.delegate('.clear', 'click', function()
+											{
+												toastr.clear($toast,
+												{
+													force: true
+												});
+											});
+										}
+
+									function getLastToast()
+									{
+										return $toastlast;
+									}
+									$('#clearlasttoast').click(function()
+									{
+										toastr.clear(getLastToast());
+									});
+									$('#cleartoasts').click(function()
+									{
+										toastr.clear();
+									});
+
+								}
+								
+														
+								window.onload = test("succes");
+								console.log('iefboub');
+
+								});
+
+							</script>
+							{% elseif success is same as('0') %}
+							<script>
+								$(document).ready(function()
+								{
+									var i = -1;
+									var toastCount = 0;
+									var $toastlast;
+
+									var getMessageWithClearButton = function(msg)
+									{
+										msg = msg ? msg : 'Clear itself?';
+										msg += '<br /><br /><button type="button" class="btn clear">Yes</button>';
+										return msg;
+									};
+
+									let test = function notification() {
+
+										let shortCutFunction = "error";
+										let msg = "Une erreur s'est produite.";
+										let title = '';
+										let $showDuration = "300";
+										let $hideDuration = "100";
+										let $timeOut = "0";
+										let $extendedTimeOut = "1000";
+										let $showEasing = "swing";
+										let $hideEasing = "linear";
+										let $showMethod = "fadeIn";
+										let $hideMethod = "fadeOut";
+										let toastIndex = toastCount++;
+										let addClear = false;
+
+										toastr.options = {
+											closeButton: false,
+											debug: false,
+											newestOnTop: true,
+											progressBar: true,
+											rtl: false,
+											positionClass: "toast-top-right",
+											preventDuplicates: true,
+											onclick: null
+										};
+
+										if ($('#addBehaviorOnToastClick').prop('checked'))
+										{
+											toastr.options.onclick = function()
+											{
+												alert('You can perform some custom action after a toast goes away');
+											};
+										}
+
+										if ($('#addBehaviorOnToastCloseClick').prop('checked'))
+										{
+											toastr.options.onCloseClick = function()
+											{
+												alert('You can perform some custom action when the close button is clicked');
+											};
+										}
+
+										if ($showDuration.length)
+										{
+											toastr.options.showDuration = parseInt($showDuration);
+										}
+
+										if ($hideDuration.length)
+										{
+											toastr.options.hideDuration = parseInt($hideDuration);
+										}
+
+										if ($timeOut.length)
+										{
+											toastr.options.timeOut = addClear ? 0 : parseInt($timeOut);
+										}
+
+										if ($extendedTimeOut.length)
+										{
+											toastr.options.extendedTimeOut = addClear ? 0 : parseInt($extendedTimeOut);
+										}
+
+										if ($showEasing.length)
+										{
+											toastr.options.showEasing = $showEasing;
+										}
+
+										if ($hideEasing.length)
+										{
+											toastr.options.hideEasing = $hideEasing;
+										}
+
+										if ($showMethod.length)
+										{
+											toastr.options.showMethod = $showMethod;
+										}
+
+										if ($hideMethod.length)
+										{
+											toastr.options.hideMethod = $hideMethod;
+										}
+
+										if (addClear)
+										{
+											msg = getMessageWithClearButton(msg);
+											toastr.options.tapToDismiss = false;
+										}
+										if (!msg)
+										{
+											msg = getMessage();
+										}
+
+										$('#toastr-log').text('Command: toastr["' +
+											shortCutFunction +
+											'"]("' +
+											msg +
+											(title ? '", "' + title : '') +
+											'")\n\ntoastr.options = ' +
+											JSON.stringify(toastr.options, null, 2)
+										);
+
+										var $toast = toastr.error(msg, title); // Wire up an event handler to a button in the toast, if it exists
+										$toastlast = $toast;
+
+										if (typeof $toast === 'undefined')
+										{
+											return;
+										}
+
+										if ($toast.find('#okBtn').length)
+										{
+											$toast.delegate('#okBtn', 'click', function()
+											{
+												alert('you clicked me. i was toast #' + toastIndex + '. goodbye!');
+												$toast.remove();
+											});
+										}
+										if ($toast.find('#surpriseBtn').length)
+										{
+											$toast.delegate('#surpriseBtn', 'click', function()
+											{
+												alert('Surprise! you clicked me. i was toast #' + toastIndex + '. You could perform an action here.');
+											});
+										}
+										if ($toast.find('.clear').length)
+										{
+											$toast.delegate('.clear', 'click', function()
+											{
+												toastr.clear($toast,
+												{
+													force: true
+												});
+											});
+										}
+
+									function getLastToast()
+									{
+										return $toastlast;
+									}
+									$('#clearlasttoast').click(function()
+									{
+										toastr.clear(getLastToast());
+									});
+									$('#cleartoasts').click(function()
+									{
+										toastr.clear();
+									});
+
+								}
+								
+														
+								window.onload = test("succes");
+								console.log('iefboub');
+
+								});
+
+							</script> 
+							{% else %}
+							{% endif %}
+						</div>
+							{# For convenience sake of this snippet, store the errors in a variable #}
+							{% set formErrors = form.vars.errors.form.getErrors(true) %}
+																
+							{# If there are errors in the form, display them in this unorganized list #}
+							{% if formErrors|length %}													
+								<div class="row">
+									<div class="col-lg">
+										<div class="form-group p-md-2 p-2">
+											<div class="alert border-danger bg-transparent text-secondary fade show" role="alert">
+												<div class="d-flex align-items-center">
+													<div class="alert-icon">
+														<span class="icon-stack icon-stack-md">
+															<i class="base-7 icon-stack-3x color-danger-900"></i>
+															<i class="fal fa-times icon-stack-1x text-white"></i>
+														</span>
+													</div>
+													
+													<div class="flex-1">
+													{% for error in formErrors %}
+															<span class="h5 color-danger-900"><li>{{ error.message }}</li></span>
+													{% endfor %}
+													</div>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>													
+							{% endif %}
+						<div class="row">
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-venus-mars fs-xl"></i>
+									<label class="form-label fs-xl" for="input-group-lg-size">Titre<span class="text-danger fs-xl">*</span></label>
+									<div id="user_userSalutation" class="frame-wrap">
+										<div class="custom-control custom-radio custom-control-inline">
+											{{ form_widget(form.usersalutation[0], {'choice_attr': {'class': 'custom-control-input'}}) }}
+											{{ form_label(form.usersalutation[0], 'M.', {'label_attr': {'class': 'ml-2'}}) }}
+										</div>
+										{# <div class="custom-control custom-radio custom-control-inline">
+											{{ form_widget(form.userSalutation[1], {'choice_attr': {'class': 'custom-control-input'}}) }}
+											{{ form_label(form.userSalutation[1], 'Melle', {'label_attr': {'class': 'custom-control-label'}}) }}
+											<input class="custom-control-input" type="radio" id="user_userSalutation_1" name="user[userSalutation]" required="required" value="Melle" />
+											<label class="custom-control-label" for="user_userSalutation_1" class="required">Melle</label>
+										</div> #}
+										<div class="custom-control custom-radio custom-control-inline">
+											{{ form_widget(form.usersalutation[1], {'choice_attr': {'class': 'custom-control-input'}}) }}
+											{{ form_label(form.usersalutation[1], 'Mme', {'label_attr': {'class': 'ml-2'}}) }}
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-portrait fs-xl"></i>
+									<label class="form-label fs-xl" for="input-group-lg-size">Photo</label>
+									<div class="custom-file">
+										{{ form_widget(form.userphoto, {'attr': {'class': 'custom-file-input'}}) }}
+										{{ form_label(form.userphoto, 'Choisissez une image', {'label_attr': {'class': 'custom-file-label'}}) }}
+										{# <input type="file" class="custom-file-input" id="UserPhoto" name="UserPhoto">
+										<label class="custom-file-label" for="customControlValidation7">Choisir une photo...</label> #}
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-address-card fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Prénom <span class="text-danger">*</span></label> #}
+									{{ form_label(form.userfirstname, 'Prénom', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserFirstName" name="UserFirstName" type="text" class="form-control" placeholder="Prénom" value="" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.userfirstname, {'attr': {'class': 'form-control', 'placeholder': 'Prénom'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre prénom
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-address-card fs-xl"></i>
+									{{ form_label(form.userlastname, 'Nom', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserLastName" name="UserLastName" type="text" class="form-control" value="" placeholder="Nom" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.userlastname, {'attr': {'class': 'form-control', 'placeholder': 'Nom'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre nom
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-mobile fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Mobile <span class="text-danger">*</span></label> #}
+									{{ form_label(form.usermobile, 'Mobile', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserMobile" name="UserMobile" type="text" class="form-control" placeholder="Mobile" value="" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.usermobile, {'attr': {'class': 'form-control', 'placeholder': 'Mobile'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre mobile
+										</div>
+									</div>
+								</div>
+							</div>
+
+								<div class="col-lg">
+									<div class="form-group p-md-2 p-2">
+										<i class="fal fa-phone fs-xl"></i>									
+										{# <label class="form-label fs-xl" for="input-group-lg-size">Téléphone</label> #}
+										{{ form_label(form.usertelephone, 'Téléphone', {'label_attr': {'class': 'form-label fs-xl'}}) }}
+										<div class="input-group input-group-lg bg-white">
+											{# <input id="UserTelephone" name="UserTelephone" type="text" class="form-control" value="" placeholder="Téléphone" aria-describedby="input-group-lg-size"> #}
+											{{ form_widget(form.usertelephone, {'attr': {'class': 'form-control', 'placeholder': 'Téléphone'}}) }}
+											<div class="invalid-feedback">
+												{{ form_errors(form.usertelephone)}}													
+											</div>
+										</div>
+									</div>
+								</div>
+						</div>
+						<div class="row">
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-house fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Adresse personnelle <span class="text-danger">*</span></label> #}
+									{{ form_label(form.userstreet, 'Adresse personnelle', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserStreet" name="UserStreet" type="text" class="form-control" value="" placeholder="Adresse" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.userstreet, {'attr': {'class': 'form-control', 'placeholder': 'Adresse'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre adresse
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-mailbox fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Code postal <span class="text-danger">*</span></label> #}
+									{{ form_label(form.usercp, 'Code postal', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserCP" name="UserCP" type="text" class="form-control" value="" placeholder="Code postal" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.usercp, {'attr': {'class': 'form-control', 'placeholder': 'Code postal'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre code postal
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-house fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Complément d'adresse</label> #}
+									{{ form_label(form.usercomplement, 'Complément d\'adresse', {'label_attr': {'class': 'form-label fs-xl'}}) }}
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserComplement" name="UserComplement" type="text" class="form-control" value="" placeholder="Complément d'adresse" aria-describedby="input-group-lg-size"> #}
+										{{ form_widget(form.usercomplement, {'attr': {'class': 'form-control', 'placeholder': 'Complément d\'adresse'}}) }}
+									</div>
+								</div>
+							</div>
+							<div class="col-lg">
+								<div class="form-group p-md-2 p-2">
+									<i class="fal fa-city fs-xl"></i>
+									{# <label class="form-label fs-xl" for="input-group-lg-size">Ville <span class="text-danger">*</span></label> #}
+									{{ form_label(form.usercity, 'Ville', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger fs-xl">*</span>
+									<div class="input-group input-group-lg bg-white shadow-inset-2">
+										{# <input id="UserCity" name="UserCity" class="form-control" value="" placeholder="Ville" aria-describedby="input-group-lg-size" required> #}
+										{{ form_widget(form.usercity, {'attr': {'class': 'form-control', 'placeholder': 'Ville'}}) }}
+										<div class="invalid-feedback">
+											Merci de renseigner votre ville
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xl-12">
+			<div class="panel-content d-flex flex-row align-items-center">
+				<button class="btn btn-primary ml-auto" type="submit"><i class="fal fa-save fs-xl"></i>&nbsp;&nbsp;Enregistrer</button>
+			</div>
+		</div>
+	</div>
+
+{{ form_end(form) }}
+
+	{# <input type="hidden" name="page" value="{$page}" />
+	<input type="text" id="test"/>
+	<p id='afficher'></p> #}
+
+
+
+<script>
+	// Example starter JavaScript for disabling form submissions if there are invalid fields
+	(function()
+	{
+		'use strict';
+		window.addEventListener('load', function()
+		{
+
+			// Fetch all the forms we want to apply custom Bootstrap validation styles to
+			var forms = document.getElementsByClassName('needs-validation');
+			// Loop over them and prevent submission
+			var validation = Array.prototype.filter.call(forms, function(form)
+			{
+				form.addEventListener('submit', function(event)
+				{
+					if (form.checkValidity() === false)
+					{
+						event.preventDefault();
+						event.stopPropagation();
+					}
+					form.classList.add('was-validated');
+				}, false);
+			});
+		}, false);
+	})();
+
+</script>
+
+{# <script>
+
+	$(document).on('change', '#test', function()
+	{
+
+		var request = new XMLHttpRequest();
+		request.open('GET', 'https://api-adresse.data.gouv.fr/search/?q=21bis%20Boulevard%20Victor%20Hugo%2044200%20Nantes&type=housenumber&autocomplete=1');
+		request.send();
+		request.onload = ()=>{
+			console.log(JSON.parse(request.response));
+			result = JSON.parse(resquest.response);
+			result->query();
+		}
+
+	})
+</script> #}
+
+							
+</main>
+
+{% endblock %}

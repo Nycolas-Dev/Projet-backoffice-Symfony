@@ -1,0 +1,664 @@
+{% extends 'base_bootstrap.html.twig' %}
+{% block title %}Portfolio{% endblock %}
+{% block main %}
+
+<main id="js-page-content" role="main" class="page-content">
+        {# {if $formError}
+        <div class="alert border-danger bg-transparent text-secondary fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <div class="alert-icon">
+                    <span class="icon-stack icon-stack-md">
+                        <i class="base-7 icon-stack-3x color-danger-900"></i>
+                        <i class="fal fa-times icon-stack-1x text-white"></i>
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <span class="h5 color-danger-900">{$formError} </span>
+                </div>
+            </div>
+        </div>
+    {elseif $formOK neq ""}
+        <div class="alert border-faded bg-transparent text-secondary fade show" role="alert">
+            <div class="d-flex align-items-center">
+                <div class="alert-icon">
+                    <span class="icon-stack icon-stack-md">
+                        <i class="base-7 icon-stack-3x color-success-600"></i>
+                        <i class="fal fa-check icon-stack-1x text-white"></i>
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <span class="h5 color-success-600">{$formOK}</span>
+                </div>
+            </div>
+        </div>
+    {/if}
+
+    {$i=1} #}
+
+
+    <div class="row">
+        <div class="col-xl-12">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <h2>
+                        <div class="btn-group">
+                            <a class="dropdown-item edit-portfolio" data-toggle="modal" data-id="" href="#modal-edit">
+                                <button class="btn btn-info" type="button">
+                                    <i class="fal fa-plus"></i> Ajouter une référence
+                                </button>
+                            </a>
+                        </div>
+                    </h2>
+                    
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Réduire"><i class="fal fa-window-minimize"></i></button>
+                        <button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Plein écran"><i class="fal fa-expand"></i></button>
+                    </div>
+                </div>
+            
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <ul class="timeline">
+                            {% for portfolio in portfolios %}
+                                <li class="timeline-inverted">
+                                    <div class="timeline-badge success">{{ portfolio.number }}</div>
+                                    <div class="timeline-panel">
+                                        <div class="panel-hdr">
+                                            <h2>
+                                                {{ portfolio.candidateportfoliosociete }}
+                                                {# {if $v.CandidatePortfolioSociete eq ""}(Confidentiel){else}{$v.CandidatePortfolioSociete}{/if} #}
+                                            </h2>
+                                            <div class="panel-toolbar">
+                                                <button type="button" class="btn btn-warning rounded-circle btn-icon" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fal fa-cog"></i>
+                                                </button>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item edit-portfolio" data-toggle="modal" href="#modal-edit" data-id="{{ portfolio.candidateportfolioid }}"><i class="fal fa-edit"></i> Modifier</a>
+                                                    <!-- <a class="dropdown-item" href="{$cfg._rootUrl}/{$module}/{$page}/Up/{$k}"><i class="fal fa-arrow-up"></i> Remonter</a>
+                                                    <a class="dropdown-item" href="{$cfg._rootUrl}/{$module}/{$page}/Down/{$k}"><i class="fal fa-arrow-down"></i> Descendre</a> -->
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item delete-portfolio" data-toggle="modal" href="#modal-delete" data-id="{{ portfolio.candidateportfolioid }}"><i class="fal fa-trash-alt"></i> Supprimer</button>
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="panel-container show">
+                                            <div class="panel-content pb-0">
+                                                <h4>
+                                                    <span class="badge badge-pill badge-secondary fw-400 ml-auto mr-2">
+                                                        {{ portfolio.candidateportfoliodurationfrom|date('m/Y') }} > {{ portfolio.candidateportfoliodurationto|date('m/Y') }}
+                                                        {# {$v.CandidatePortfolioDurationFrom|strtotime|date_format:'%m-%Y'} > {$v.CandidatePortfolioDurationTo|strtotime|date_format:'%m-%Y'} #}
+                                                    </span>
+                                                </h4>
+                                                <div class="panel-tag">
+                                                        {{ portfolio.candidateportfoliomissions }}
+                                                    {# {$v.CandidatePortfolioMissions|nl2br} #}
+                                                </div>
+                                            </div>
+                                            <!-- panel footer with utility classes -->
+                                            <div class="panel-content py-2 rounded-bottom border-faded border-left-0 border-right-0 border-bottom-0 text-muted">
+                                                <!-- <span class="badge badge-primary fw-400 mr-2">
+                                                    #{$v.CandidatePortfolioSociete}
+                                                </span> -->
+                                                {% set contextes = portfolio.candidateportfoliocontexte|split(';') %}
+                                                {% for contexte in contextes %}
+                                              {# {foreach from=$v.CandidatePortfolioContexte key=k2 item=v2} #}
+                                                    <span class="badge badge-info fw-400 mr-2">
+                                                        #{{ contexte }}												
+                                                    </span>
+                                                {# {/foreach} #}
+                                                {% endfor %}
+                                                {% set secteurs = portfolio.candidateportfoliosecteur|split(';') %}
+                                                {% for secteur in secteurs %}
+                                                {# {foreach from=$v.CandidatePortfolioSecteur key=k2 item=v2} #}
+                                                    <span class="badge badge-danger fw-400 mr-2">
+                                                        #{{ secteur }}												
+                                                    </span>
+                                                {# {/foreach}#}
+                                                {% endfor %}									   
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{ render(controller('App\\Controller\\PortfolioController::portfolioDeleteView')) }}
+    <!-- modal delete -->
+    {# <div class="modal modal-alert fade" id="modal-delete" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Confirmez-vous la suppression de cette référence ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                    <a href="{{ path('portfoliodelete', {'id' : portfolio.candidateportfolioid })}}" class="delete-portfolio-link"><button type="button" class="btn btn-primary">Je confirme</button></a>
+                </div>
+            </div>
+        </div>
+    </div> #}
+
+    <!-- modal edit -->
+    <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-right modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4"><i class="fal fa-folder fs-xl"></i> EDIT </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                    </button>
+                </div>
+                <form class="needs-validation" id="modal-edit-form" novalidate method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    {# {{ form_start(formPortfolio, {'attr': {'class': 'needs-validation'}}) }}  #}
+                        <!-- <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-newspaper fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Titre <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg bg-white shadow-inset-2">
+                                        <input name="CandidatePortfolioTitre" id="CandidatePortfolioTitre" type="text" class="form-control" placeholder="Titre" value="" data-toggle="tooltip" data-placement="auto" data-original-title="Saisissez ici le titre de la mission réalisée." aria-describedby="input-group-lg-size" required>
+                                        <div class="invalid-feedback">
+                                            Merci de renseigner le titre de la mission
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-image fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Logo</label>
+                                    <div class="input-group input-group-lg">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="CandidatePortfolioLogo" name="CandidatePortfolioLogo">
+                                            <label class="custom-file-label" for="customControlValidation7">Choisir un logo...</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-pen-alt fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Description <span class="text-danger">*</span></label>
+                                    {# {{ form_label(formPortfolio.candidateportfoliomissions, 'Description', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger">*</span> #}
+                                    <div class="input-group input-group-lg">
+                                        <textarea class="form-control" rows="5" name="CandidatePortfolioMissions" id="CandidatePortfolioMissions" maxlength="1000" placeholder="Description de la mission" data-toggle="tooltip" data-placement="auto" data-original-title="Saisissez ici le descriptif de la mission réalisée : rôle, contexte, problématiques rencontrées, solutions mises en place et résultats obtenus." required></textarea>
+                                        {# {{ form_widget(formPortfolio.candidateportfoliomissions, {'attr': {'class': 'form-control'}}) }} #}
+                                        <div class="invalid-feedback">
+                                            Merci de renseigner un description de mission
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-building fs-xl"></i>
+                                    {# {{ form_label(formPortfolio.candidateportfoliosociete, 'Société', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger">*</span> #}
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Société</label>
+                                    <div class="input-group input-group-lg bg-white shadow-inset-2">
+                                        {# {{ form_widget(formPortfolio.candidateportfoliosociete, {'attr': {'class': 'form-control'}}) }} #}
+                                        <input name="CandidatePortfolioSociete" id="CandidatePortfolioSociete" type="text" class="form-control" placeholder="Société" value="" data-toggle="tooltip" data-placement="auto" data-original-title="Ne rien mettre si vous souhaitez que cela reste confidentiel." aria-describedby="input-group-lg-size">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-industry-alt fs-xl"></i>
+                                    {# {{ form_label(formPortfolio.candidateportfoliosecteur, 'Secteur d\'activité', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger">*</span> #}
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Secteur d'activité <span class="text-danger">*</span></label>
+                                    <div class="input-group input-group-lg" data-toggle="tooltip" data-placement="auto" data-original-title="Sélectionnez le secteur d'activité dans lequel vous avez exercé votre mission.">
+                                        <select class="select2 form-control w-100 js-select2-icons formselect2" name="CandidatePortfolioSecteur[]" id="CandidatePortfolioSecteur" multiple="multiple" required>
+                                            <option>Agriculture, sylviculture et pêche</option>
+                                            <option>Industries extractives</option>
+                                            <option>Industrie manufacturière</option>
+                                            <option>Production et distribution d'électricité, de gaz, de vapeur et d'air conditionné</option>
+                                            <option>Production et distribution d'eau / assainissement, gestion des déchets et dépollution</option>
+                                            <option>Construction</option>
+                                            <option>Commerce / réparation d'automobiles et de motocycles</option>
+                                            <option>Transports et entreposage</option>
+                                            <option>Hébergement et restauration</option>
+                                            <option>Information et communication</option>
+                                            <option>Activités financières et d'assurance</option>
+                                            <option>Activités immobilières</option>
+                                            <option>Activités spécialisées, scientifiques et techniques</option>
+                                            <option>Activités de services administratifs et de soutien</option>
+                                            <option>Administration publique</option>
+                                            <option>Enseignement</option>
+                                            <option>Santé humaine et action sociale</option>
+                                            <option>Arts, spectacles et activités récréatives</option>
+                                            <option>Autres activités de services</option>
+                                        </select>
+                                        {# {{ form_widget(formPortfolio.candidateportfoliosecteur, {'attr': {'class': 'select2 form-control w-100 js-select2-icons'}}) }} #}
+                                        <div class="invalid-feedback">
+                                            Merci de sélectionner le(s) secteur(s) d'activité
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-ruler fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Contexte <span class="text-danger">*</span></label>
+                                    {# {{ form_label(formPortfolio.candidateportfoliocontexte, 'Contexte', {'label_attr': {'class': 'form-label fs-xl'}}) }}<span class="text-danger">*</span> #}
+                                    <div class="input-group input-group-lg" data-toggle="tooltip" data-placement="auto" data-original-title="Sélectionnez le contexte dans lequel vous avez exercé votre mission. Ils peuvent être multiples (ex. filiale de Groupe)">
+                                        <select class="select2 form-control w-100 js-select2-icons formselect2" name="CandidatePortfolioContexte[]" id="CandidatePortfolioContexte" multiple="multiple" required>
+                                            <option value="Start-up">Start-up (< 2 M€)</option>
+                                            <option value="PME/PMI">PME/PMI (2M à 50M€)</option>
+                                            <option value="ETI">ETI (50M à 1,5 Md€)</option>
+                                            <option value="Grand compte">Grand compte (> 1,5 Md€)</option>
+                                        </select>
+                                        {# {{ form_widget(formPortfolio.candidateportfoliocontexte, {'attr': {'class': 'select2 form-control w-100 js-select2-icons'}}) }} #}
+                                        <div class="invalid-feedback">
+                                            Merci de sélectionner le(s) contexte(s)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-calendar-alt fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Période <span class="text-danger">*</span></label>
+                                    <div class="input-daterange input-group datepicker" id="" data-toggle="tooltip" data-placement="auto" data-original-title="Sélectionnez les dates de début et fin de la mission.">
+                                        <input type="text" class="form-control" name="CandidatePortfolioDurationFrom" id="CandidatePortfolioDurationFrom" required>
+                                        {# {{ form_widget(formPortfolio.candidateportfoliodurationfrom, {'attr': {'class': 'form-control'}}) }} #}
+                                        <div class="input-group-append input-group-prepend">
+                                            <span class="input-group-text fs-xl"><i class="fal fa-ellipsis-h"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" name="CandidatePortfolioDurationTo" id="CandidatePortfolioDurationTo" required>
+                                        {# {{ form_widget(formPortfolio.candidateportfoliodurationto, {'attr': {'class': 'form-control'}}) }} #}
+                                        <div class="invalid-feedback">
+                                            Merci de renseigner les dates de début et fin de la mission
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>			
+                    <input type="hidden" id="CandidatePortfolioId" name="CandidatePortfolioId"/>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fal fa-times fs-xl"></i> Annuler</button>
+                        <button type="submit" class="btn btn-primary"><i class="fal fa-save fs-xl"></i> Enregistrer</button>
+                    </div>
+                </form>
+                {# {{ form_end(formPortfolio) }} #}
+            </div>
+        </div>
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+    $(document).ready(function() {
+        $(document).on("click", ".delete-portfolio", function () {
+            $(".delete-portfolio-link").attr("href", 'delete' +'/'+ $(this).data('id'));
+        });
+
+        $(document).on("click", ".edit-portfolio", function () {
+
+            console.log($(this).data('id'));
+
+            $.ajax({
+                type		: "POST",
+                url			: "{{ path('portfolioedit') }}" +'/'+ $(this).data('id'),
+                dataType	: "json",
+                success		: function(data) {
+                    //data	= data[0];
+
+                    console.log(data);
+                    if(data.candidateportfolioid !== null){
+                    
+                    $("#CandidatePortfolioMissions").val(data.candidateportfoliomissions);
+                    
+                    $("#CandidatePortfolioTitre").val(data.candidateportfoliotitre);
+                    
+                    $("#CandidatePortfolioSociete").val(data.candidateportfoliosociete);
+                    
+                    $("#CandidatePortfolioContexte").val(data.candidateportfoliocontexte.split(";")).trigger('change');
+                    
+                    $("#CandidatePortfolioSecteur").val(data.candidateportfoliosecteur.split(";")).trigger('change');
+                    
+                    var t = data.candidateportfoliodurationfrom.split("-");
+                    $('#CandidatePortfolioDurationFrom').datepicker('setDate', t[1]+'-'+t[0]);
+                    
+                    var t = data.candidateportfoliodurationto.split("-");
+                    $('#CandidatePortfolioDurationTo').datepicker('setDate', t[1]+'-'+t[0]);
+                    
+                    $("#CandidatePortfolioId").val(data.candidateportfolioid);
+
+                    }
+                    else {
+                        
+                    $("#CandidatePortfolioMissions").val("");
+                    
+                    $("#CandidatePortfolioTitre").val("");
+                    
+                    $("#CandidatePortfolioSociete").val("");
+                    
+                    $("#CandidatePortfolioContexte").val("").trigger('change');
+                    
+                    $("#CandidatePortfolioSecteur").val("").trigger('change');
+                    
+                    $('#CandidatePortfolioDurationFrom').val("");
+                    
+                    $('#CandidatePortfolioDurationTo').val("");
+                    
+                    $("#CandidatePortfolioId").val("");
+                    }
+
+                    console.log(data.candidateportfolioid);
+                    //$("#modal-edit").modal('toggle');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    
+                }
+            });
+	    });
+
+    });
+
+
+     
+
+    
+{# $(document).ready(function() {
+	$(document).on("click", ".delete-portfolio", function () {
+		var _href = $(".delete-portfolio-link").attr("href");
+		$(".delete-portfolio-link").attr("href", _href + $(this).data('id'));
+	});
+	
+	$(document).on("click", ".delete-experience", function () {
+		var _href = $(".delete-experience-link").attr("href");
+		$(".delete-experience-link").attr("href", _href + $(this).data('id'));
+	});
+
+
+	$(document).on("click", ".edit-portfolio", function () {
+		$.ajax({
+			type		: "POST",
+			url			: "/ajax.php?action=getPortfolio&id="+$(this).data('id'),
+			dataType	: "json",
+			success		: function(data) {
+				data	= data[0];
+				
+				$("#CandidatePortfolioMissions").val(data.CandidatePortfolioMissions);
+				
+				$("#CandidatePortfolioTitre").val(data.CandidatePortfolioTitre);
+				
+				$("#CandidatePortfolioSociete").val(data.CandidatePortfolioSociete);
+				
+				$("#CandidatePortfolioContexte").val(data.CandidatePortfolioContexte.split(";")).trigger('change');
+				
+				$("#CandidatePortfolioSecteur").val(data.CandidatePortfolioSecteur.split(";")).trigger('change');
+				
+				var t = data.CandidatePortfolioDurationFrom.split("-");
+				$('#CandidatePortfolioDurationFrom').datepicker('setDate', t[1]+'-'+t[0]);
+				
+				var t = data.CandidatePortfolioDurationTo.split("-");
+				$('#CandidatePortfolioDurationTo').datepicker('setDate', t[1]+'-'+t[0]);
+				
+				$("#CandidatePortfolioID").val(data.CandidatePortfolioID);
+				$("#modal-edit").modal('toggle');
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				displayError('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
+			}
+		});
+	});
+
+
+	$(document).on("click", ".edit-experience", function () {
+		$.ajax({
+			type		: "POST",
+			url			: "/ajax.php?action=getExperience&id="+$(this).data('id'),
+			dataType	: "json",
+			success		: function(data) {
+				data	= data[0];
+				
+				$("#CandidateExperienceOccupation").val(data.CandidateExperienceOccupation);
+				
+				$("#CandidateExperienceSummary").val(data.CandidateExperienceSummary);
+				
+				$("#CandidateExperienceCompany").val(data.CandidateExperienceCompany);
+				
+				//$("#CandidateExperienceContexte").val(data.CandidateExperienceContexte.split(";")).trigger('change');
+				
+				$("#CandidateExperienceSecteur").val(data.CandidateExperienceSecteur.split(";")).trigger('change');
+				
+				var t = data.CandidateExperienceDurationFrom.split("-");
+				$('#CandidateExperienceDurationFrom').datepicker('setDate', t[1]+'-'+t[0]);
+				
+				var t = data.CandidateExperienceDurationTo.split("-");
+				$('#CandidateExperienceDurationTo').datepicker('setDate', t[1]+'-'+t[0]);
+				
+				$("#CandidateExperienceID").val(data.CandidateExperienceID);
+				$("#modal-edit").modal('toggle');
+			},
+			error: function(jqXHR, textStatus, errorThrown) {
+				displayError('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
+			}
+		});
+	});
+
+	
+	$(document).on("click", ".new-experience", function () {
+		$("#modal-edit").modal('toggle');
+	});
+	#}
+
+
+
+    var controls = {
+        leftArrow: '<i class="fal fa-angle-left" style="font-size: 1.25rem"></i>',
+        rightArrow: '<i class="fal fa-angle-right" style="font-size: 1.25rem"></i>'
+    }
+    
+
+    $(document).ready(function() {
+        // you may need to change this code if you are not using Bootstrap Datepicker
+        $('.datepicker').datepicker({
+            language		: 'fr',
+            toggleActive	: true,
+            templates		: controls,
+            format			: "mm-yyyy",
+            viewMode		: "months", 
+            minViewMode		: "months",
+            endDate			: '+0d',
+            autoclose		: true
+        });
+    });
+
+	$(document).on("click", ".new-portfolio", function () {
+		$("#modal-create").modal('toggle');
+	});
+
+
+    // Date picker
+    $.fn.datepicker.dates['fr'] = {
+    days		: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"],
+    daysShort	: ["Dim.", "Lun.", "Mar.", "Mer.", "Jeu.", "Ven.", "Sam."],
+    daysMin		: ["d", "l", "ma", "me", "j", "v", "s"],
+    months		: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+    monthsShort	: ["Janv.", "Févr.", "Mars", "Avril", "Mai", "Juin", "Juil.", "Août", "Sept.", "Oct.", "Nov.", "Déc."],
+    today		: "Aujourd'hui",
+    monthsTitle	: "Mois",
+    clear		: "Effacer",
+    weekStart	: 1,
+    format		: "dd/mm/yyyy"
+    }
+
+
+</script>
+
+<script>
+            $(document).ready(function()
+            {
+                $(function()
+                
+                {
+
+                    $('.select2').select2();
+
+                    $(".select2-placeholder-multiple").select2(
+                    {
+                        placeholder: "Select State"
+                    });
+                    $(".js-hide-search").select2(
+                    {
+                        minimumResultsForSearch: 1 / 0
+                    });
+                    $(".js-max-length").select2(
+                    {
+                        maximumSelectionLength: 2,
+                        placeholder: "Select maximum 2 items"
+                    });
+                    $(".select2-placeholder").select2(
+                    {
+                        placeholder: "Select a state",
+                        allowClear: true
+                    });
+
+                    $(".js-select2-icons").select2(
+                    {
+                        minimumResultsForSearch: 1 / 0,
+                        templateResult: icon,
+                        templateSelection: icon,
+                        escapeMarkup: function(elm)
+                        {
+                            return elm
+                        }
+                    });
+
+                    $(".js-tags").select2({
+                        tags: true,
+                    });
+
+                    function icon(elm)
+                    {
+                        elm.element;
+                        return elm.id ? "<i class='" + $(elm.element).data("icon") + " mr-2'></i>" + elm.text : elm.text
+                    }
+
+                    $(".js-data-example-ajax").select2(
+                    {
+                        ajax:
+                        {
+                            url: "https://api.github.com/search/repositories",
+                            dataType: 'json',
+                            delay: 250,
+                            data: function(params)
+                            {
+                                return {
+                                    q: params.term, // search term
+                                    page: params.page
+                                };
+                            },
+                            processResults: function(data, params)
+                            {
+                                // parse the results into the format expected by Select2
+                                // since we are using custom formatting functions we do not need to
+                                // alter the remote JSON data, except to indicate that infinite
+                                // scrolling can be used
+                                params.page = params.page || 1;
+
+                                return {
+                                    results: data.items,
+                                    pagination:
+                                    {
+                                        more: (params.page * 30) < data.total_count
+                                    }
+                                };
+                            },
+                            cache: true
+                        },
+                        placeholder: 'Search for a repository',
+                        escapeMarkup: function(markup)
+                        {
+                            return markup;
+                        }, // let our custom formatter work
+                        minimumInputLength: 1,
+                        templateResult: formatRepo,
+                        templateSelection: formatRepoSelection
+                    });
+
+                    function formatRepo(repo)
+                    {
+                        if (repo.loading)
+                        {
+                            return repo.text;
+                        }
+
+                        var markup = "<div class='select2-result-repository clearfix d-flex'>" +
+                            "<div class='select2-result-repository__avatar mr-2'><img src='" + repo.owner.avatar_url + "' class='width-2 height-2 mt-1 rounded' /></div>" +
+                            "<div class='select2-result-repository__meta'>" +
+                            "<div class='select2-result-repository__title fs-lg fw-500'>" + repo.full_name + "</div>";
+
+                        if (repo.description)
+                        {
+                            markup += "<div class='select2-result-repository__description fs-xs opacity-80 mb-1'>" + repo.description + "</div>";
+                        }
+
+                        markup += "<div class='select2-result-repository__statistics d-flex fs-sm'>" +
+                            "<div class='select2-result-repository__forks mr-2'><i class='fal fa-lightbulb'></i> " + repo.forks_count + " Forks</div>" +
+                            "<div class='select2-result-repository__stargazers mr-2'><i class='fal fa-star'></i> " + repo.stargazers_count + " Stars</div>" +
+                            "<div class='select2-result-repository__watchers mr-2'><i class='fal fa-eye'></i> " + repo.watchers_count + " Watchers</div>" +
+                            "</div>" +
+                            "</div></div>";
+
+                        return markup;
+                    }
+
+                    function formatRepoSelection(repo)
+                    {
+                        return repo.full_name || repo.text;
+                    }
+
+                    $('#modal-edit').on('shown.bs.modal', function (e) {
+                        $('.datepicker').datepicker();
+                    });
+
+                    $('.formselect2').select2({
+                        dropdownParent: $('#modal-edit')
+                    });
+
+                    $('#modal-create').on('shown.bs.modal', function (e) {
+                        $('.datepicker').datepicker();
+                    });
+
+                    $('.formselect1').select2({
+                        dropdownParent: $('#modal-create')
+                    });
+                });
+            });
+
+        </script>
+
+{% endblock %}

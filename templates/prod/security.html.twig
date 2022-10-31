@@ -1,0 +1,99 @@
+{% extends 'base_bootstrap.html.twig' %}
+{% block title %}Security{% endblock %}
+{% block main %}
+
+<main id="js-page-content" role="main" class="page-content">
+    <div class="row">
+        <div class="col-xl-12">
+            <div id="panel-1" class="panel">
+                <div class="panel-hdr">
+                    <i class="fal fa-lock fs-xl"></i>&nbsp;&nbsp;
+                    <h2>
+                        Sécurité et confidentialité
+                    </h2>
+                    <div class="panel-toolbar">
+                        <button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Réduire"><i class="fal fa-window-minimize"></i></button>
+                        <button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-fullscreen" data-toggle="tooltip" data-offset="0,10" data-original-title="Plein écran"><i class="fal fa-expand"></i></button>
+                    </div>
+                </div>
+            
+                <div class="panel-container show">
+                    <div class="panel-content">
+                        <div class="row">
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-download fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Export</label>
+                                    <div class="panel-tag">
+                                        En validant cette opération, vous recevrez automatiquement un e-mail incluant un lien pour télécharger l'ensemble des données vous concernant que nous avons en notre possession.
+                                    </div>
+                                    <div class="input-group input-group-lg bg-white">
+                                        <button class="btn btn-xl btn-primary" data-toggle="modal" data-target="#modal-confirmation">Exporter mes données</button>
+                                    </div>
+                                </div>
+                                <!-- modal confirmation -->
+                                <div class="modal modal-alert fade" id="modal-confirmation" tabindex="-1" role="dialog" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Confirmation</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Confirmez-vous l'export de vos données ?
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                <a href="#"<button type="button" class="btn btn-primary">Je confirme</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg">
+                                <div class="form-group p-md-2 p-2">
+                                    <i class="fal fa-trash-alt fs-xl"></i>
+                                    <label class="form-label fs-xl" for="input-group-lg-size">Suppression</label>
+                                    <div class="panel-tag">
+                                        La suppression de votre compte est une opération irréversible.<br/>
+                                        A la suite de votre validation avec le bouton ci-dessous, vous recevrez un e-mail contenant un lien de confirmation valable pendant 2h.
+                                    </div>
+                                    <div class="input-group input-group-lg bg-white">
+                                        <button class="btn btn-xl btn-primary" data-toggle="modal" data-target="#modal-alert">Supprimer mon compte</button>
+                                    </div>
+                                    <!-- modal alert -->
+                                    <div class="modal modal-alert fade" id="modal-alert" tabindex="-1" role="dialog" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Confirmation</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true"><i class="fal fa-times"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    Etes-vous sûr de vouloir supprimer votre compte ?<br/>
+                                                    Cette opération est irréversible.<br/>
+                                                    Si vous confirmez cette opération, vous recevrez un e-mail de demande confirmation avant de procéder définitivement à la suppression de vos données.
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                    <a href="#"<button type="button" class="btn btn-primary">Je confirme</button></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

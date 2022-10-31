@@ -1,0 +1,174 @@
+{% extends 'base_bootstrap.html.twig' %}
+{% block title %}Accueil{% endblock %}
+{% block main %}
+
+<main id="js-page-content" role="main" class="page-content">
+
+<div class="row">
+	<div class="col-lg-6 col-xl-3 order-lg-1 order-xl-1">
+		<!-- profile summary -->
+		<div class="card mb-g rounded-top">
+			<div class="row no-gutters row-grid">
+				<div class="col-12">
+					<div class="d-flex flex-column align-items-center justify-content-center p-4">
+						<img src="{{ user.displayPhoto }}" class="rounded-circle shadow-2 img-thumbnail">
+						<h5 class="mb-0 fw-700 text-center mt-3">
+							{{ user.userfirstname }} {{ user.userlastname }}
+							<small class="text-muted mb-0">
+								{% if user.userstreet is not null and user.userstreet is not same as '' %}{{ user.userstreet }}<br>{% endif %}
+								{% if user.usercomplement is not null and user.usercomplement is not same as '' %}{{ user.usercomplement }}<br>{% endif %}
+								{% if user.usercp is not null and user.usercp is not same as '' %}{{ user.usercp }}{% endif %} 
+								{% if user.usercity is not null and user.usercity is not same as '' %}{{ user.usercity }}<br>{% else %}<br>{% endif %}
+								{% if user.usermobile is not null and user.usermobile is not same as '' %}{{ user.usermobile }}<br>{% endif %}
+							
+							{% if (user.userstreet is null or user.userstreet is same as '') or (user.usercp is null or user.usercp is same as '') or (user.usercity is null or user.usercity is same as '') or (user.usermobile is null or user.usermobile is same as '') %}
+								<a href="{{ path('profil') }}">Compléter</a>
+							{% endif %}
+							</small>							
+						</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12 col-xl-6 order-lg-3 order-xl-2">
+		<!-- post comment -->
+		<div class="card mb-g">
+			<div class="row no-gutters row-grid">
+				<div class="col-12 row no-gutters row-grid card-body pb-0 px-4">
+					<h5 class="mb-0 flex-1 text-dark fw-500">
+						{{ parteamer.candidatemetier }}
+					</h5>
+					<div class="pb-3 pt-2 border-top-0 border-left-0 border-right-0 text-muted">
+						{{ parteamer.candidateresume }}
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="text-center py-3">
+						<h5 class="mb-0 fw-700">
+							<small class="text-muted mb-0">Disponibilité</small>
+							{{ parteamer.candidateavailability }} <a href="" data-toggle="modal" data-target="#modal-test"><i class="fal fa-pencil" alt"=Modifier"></i></a>
+						</h5>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="text-center py-3">
+						<h5 class="mb-0 fw-700">
+							<small class="text-muted mb-0">TJM</small>
+							~{{ parteamer.candidatecjm|number_format(0,",",".")}} &euro; HT <a href="{{ path('parteamer')}}"><i class="fal fa-pencil" alt"=Modifier"></i></a>
+						</h5>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="text-center py-3">
+						<h5 class="mb-0 fw-700">
+							<small class="text-muted mb-0">Missions souhaitées</small>
+							{% set tablePreferences = parteamer.candidatepreferences|split(';') %}{{ tablePreferences|join(' |') }} <a href="{{ path('parteamer')}}"><i class="fal fa-pencil" alt"=Modifier"></i></a>
+						</h5>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="text-center py-3">
+						<h5 class="mb-0 fw-700">
+							<small class="text-muted mb-0">Mobilité</small>
+							{{ parteamer.candidatewmobility }}/sem. <a href="{{ path('parteamer')}}"><i class="fal fa-pencil" alt"=Modifier"></i></a>
+						</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- post comment - end -->
+		
+	</div>
+	<div class="col-lg-6 col-xl-3 order-lg-2 order-xl-3">
+		<!-- add : -->
+		<div class="card mb-2">
+			<div class="card-body">
+				<a href="{{ path('profil')}}" class="d-flex flex-row align-items-center">
+					<div class="js-easy-pie-chart color-info-100 position-relative d-inline-flex align-items-center justify-content-center" data-percent="{$smarty.session.userinfo.UserCompletion}" data-piesize="95" data-linewidth="5" data-linecap="round" data-scalelength="7">
+						<div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-xl">
+							<span class="js-percent d-block text-dark"></span>
+							<div class="d-block fs-xs text-dark opacity-70">
+								<small>%</small>
+							</div>
+						</div>						
+					</div>
+					<div class="ml-3">
+						<strong>
+							Coordonnées
+						</strong>
+						<br>
+						Adresse, téléphone, email...
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="card mb-2">
+			<div class="card-body">
+				<a href="{{ path('parteamer')}}" class="d-flex flex-row align-items-center">
+					<div class="js-easy-pie-chart color-danger-500 position-relative d-inline-flex align-items-center justify-content-center" data-percent="{$smarty.session.userinfo.CandidateCompletion}" data-piesize="95" data-linewidth="5" data-linecap="round" data-scalelength="7">
+						<div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-xl">
+							<span class="js-percent d-block text-dark"></span>
+							<div class="d-block fs-xs text-dark opacity-70">
+								<small>%</small>
+							</div>
+						</div>
+					</div>
+					<div class="ml-3">
+						<strong>
+							Profil
+						</strong>
+						<br>
+						Souhaits de mission, TJM, mobilité...
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="card mb-2">
+			<div class="card-body">
+				<a href="{{ path('portfolio')}}" class="d-flex flex-row align-items-center">
+					<div class="js-easy-pie-chart color-primary-300 position-relative d-inline-flex align-items-center justify-content-center" data-percent="{$smarty.session.userinfo.ExperienceCompletion}" data-piesize="95" data-linewidth="5" data-linecap="round" data-scalelength="7">
+						<div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-xl">
+							<span class="js-percent d-block text-dark"></span>
+							<div class="d-block fs-xs text-dark opacity-70">
+								<small>%</small>
+							</div>
+						</div>
+					</div>
+					<div class="ml-3">
+						<strong>
+							Portfolio/CV
+						</strong>
+						<br>
+						Réalisations, expériences professionnelles...
+					</div>
+				</a>
+			</div>
+		</div>
+		<!--<div class="card mb-2">
+			<div class="card-body">
+				<a href="{$cfg._rootUrl}/Profile/Portfolio/" class="d-flex flex-row align-items-center">
+					<div class="js-easy-pie-chart color-success-300 position-relative d-inline-flex align-items-center justify-content-center" data-percent="{$smarty.session.userinfo.ExperienceCompletion}" data-piesize="95" data-linewidth="5" data-linecap="round" data-scalelength="7">
+						<div class="d-flex flex-column align-items-center justify-content-center position-absolute pos-left pos-right pos-top pos-bottom fw-300 fs-xl">
+							<span class="js-percent d-block text-dark"></span>
+							<div class="d-block fs-xs text-dark opacity-70">
+								<small>%</small>
+							</div>
+						</div>
+					</div>
+					<div class="ml-3">
+						<strong>
+							Entreprise
+						</strong>
+						<br>
+						Informations légales, attestations, assurance...
+					</div>
+				</a>
+			</div>
+		</div>-->
+	</div>
+</div>
+
+</main>
+
+{% endblock %}
